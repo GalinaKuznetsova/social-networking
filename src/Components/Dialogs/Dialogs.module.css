@@ -1,0 +1,45 @@
+.dialogs {
+    min-width: 500px;
+    display: flex;
+    justify-content:space-around;
+}
+
+.navlink {
+    text-decoration: none;
+    color: #27aae1;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+}
+.span {
+    margin-left: 10px;
+}
+
+.message {
+    color: #939598;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.dialogsContent {
+    display: flex;
+    gap: 20px;
+}
+
+.dialogsSendMessage {
+ display: flex;
+ align-items: center;
+ gap:10px;
+}
+.dialogsBtn {
+    border:none;
+    background-color: white;
+}

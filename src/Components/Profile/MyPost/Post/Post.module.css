@@ -1,0 +1,49 @@
+.mypostContent {
+    display: flex;
+    gap: 10px;
+
+}
+.mypost {
+    border: 1px solid rgba(128, 128, 128, 0.214);
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.mypostTextContent{
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px;
+border-bottom: 1px solid rgba(128, 128, 128, 0.322);
+}
+
+.mypostAva {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.mypostPhoto{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+}
+
+.name {
+    color: #27aae1;
+    font-weight: 600;
+}
+
+.mypostIcons {
+    width: 60px;
+    height: 30px;
+}
+
+span img {
+    width: 10px;
+    height: 10px;
+}
+.mypostMessage {
+padding: 10px;
+}
