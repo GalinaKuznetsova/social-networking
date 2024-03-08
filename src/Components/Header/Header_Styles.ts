@@ -16,8 +16,19 @@ const Img = styled.img`
 max-width: 50px;
 width:100%;
 `
+const LoginBlock = styled.div`
+display: flex;
+/* float: right; */
+justify-content:right;
+padding: 10px;
+color: white;
+font-size: 18px;
+font-weight: 200;
+
+`
 
 export const S = {
     Header,
-    Img
+    Img,
+    LoginBlock
 }

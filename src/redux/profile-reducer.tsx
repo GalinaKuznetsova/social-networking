@@ -1,3 +1,8 @@
+import { Dispatch } from "redux";
+import { ActionUsersTypes } from "./users-reduer";
+import { AppRootState } from "./redux-store";
+import { profileAPI, usersAPI } from "../api/api";
+
 export type PostType = {
   id: number;
   src: string;
@@ -6,9 +11,20 @@ export type PostType = {
   message: string;
   like: number;
 };
+export type ProfileType = {
+aboutMe:string
+contacts:{facebook: string, website: string, vk:string, twitter:string, instagram: string,youtube:string,mainLink:string}
+fullName:string
+lookingForAJob:boolean
+lookingForAJobDescription:string
+photos:{small:string, large: string}
+userId: number
+}
 export type ProfilePageType = {
   post: PostType[],
-newPostText:string
+// newPostText:string,
+status:string,
+profile:ProfileType
 };
 let initialState:ProfilePageType={
     post: [
@@ -37,48 +53,123 @@ let initialState:ProfilePageType={
         like: 10,
       },
     ],
-    newPostText: "",
+    // newPostText: "",
+    profile:{
+      aboutMe:"",
+  contacts:{facebook: "", website: "", vk:"", twitter:"", instagram: "",youtube:"",mainLink:""},
+  fullName:"",
+  lookingForAJob:true,
+  lookingForAJobDescription:"",
+  photos:{small:"", large: ""},
+  userId: 0
+    },
+    status:''
   }
-export const profileReducer = (state:ProfilePageType = initialState,action:AddPostActionType | updateNewPostTextType ):ProfilePageType => {
-    switch(action.type) {
+
+export const profileReducer = (state:ProfilePageType = initialState,action:ActionsPostTypes):ProfilePageType => {
+
+  switch(action.type) {
         case 'ADD-POST':{
             const newPost: PostType = {
                 id: new Date().getTime(),
                 src: "https://img.goodfon.ru/original/2000x1485/5/80/doutzen-kroes-dautcen-krez-2332.jpg",
                 name: "Asan",
                 title: "post4",
-                message: state.newPostText,
+                message: action.newPostText,
                 like: 0,
               };
               return {
                 ...state,
                 post:[...state.post,newPost],
-                newPostText :""
+                // newPostText :""
               }
               
         }
-        case 'UPDATE-NEW-POST-TEXT':{
-          return {
-            ...state,
-            newPostText : action.newText
-          }
-       
-    }
+    //     case 'UPDATE-NEW-POST-TEXT':{
+    //       return {
+    //         ...state,
+    //         newPostText : action.newText
+    //       }
+    // }
+    case 'SET-USER-PROFILE':{
+      return {
+        ...state,
+        profile : action.profile
+      }
+}
+case 'SET-STATUS': {
+  return {
+    ...state,
+    status:action.status
+  }
+}
+
+  
+   
+
 default : return state
     }
 }
 export type AddPostActionType = ReturnType<typeof addPostActionCreator>
-export  type updateNewPostTextType = ReturnType<typeof updateNewPostTextActionCreator>
+// export  type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextActionCreator>
+export type SetUserProfileActionType = ReturnType<typeof setUserProfileActionCreator>
+export type SetStatusActionType = ReturnType<typeof setSatusActionCreator>
 
-export type ActionsPostTypes = AddPostActionType | updateNewPostTextType
+export type ActionsPostTypes =
+ AddPostActionType 
+//  | UpdateNewPostTextType 
+ | SetUserProfileActionType
+ | SetStatusActionType
 export const addPostActionCreator=( newPostText:string)=>{
     return {
         type :'ADD-POST',
         newPostText: newPostText
     }as const
   }
-  export const updateNewPostTextActionCreator=(text:string)=>{
+  // export const updateNewPostTextActionCreator=(text:string)=>{
+  //   return {
+  //       type :'UPDATE-NEW-POST-TEXT',newText:text
+  //   }as const
+  // }
+
+  export const setUserProfileActionCreator=(profile:ProfileType)=>{
     return {
-        type :'UPDATE-NEW-POST-TEXT',newText:text
+        type :'SET-USER-PROFILE', profile:profile
     }as const
   }
+
+  export function setSatusActionCreator(status: string) {
+  return {
+    type: 'SET-STATUS', status: status
+  } as const;
+}
+
+  export  const getUserProfileThunkCreator = (userId:number)=> (dispatch: Dispatch<ActionsPostTypes>, getState: () => AppRootState) =>{
+   usersAPI.getProfile(userId)
+      .then((response) => {
+        dispatch(setUserProfileActionCreator(response.data))
+      
+      });
+   }
+
+
+
+  export  const getStatusThunkCreator = (userId:number)=> 
+  (dispatch: Dispatch<ActionsPostTypes>, getState: () => AppRootState) =>{
+    profileAPI.getStatus(userId)
+       .then((response) => {
+         dispatch(setSatusActionCreator(response.data))
+       
+       });
+    }
+
+    export  const updateStatusThunkCreator = (status:string)=> 
+    (dispatch: Dispatch<ActionsPostTypes>, getState: () => AppRootState) =>{
+      profileAPI.updateSatus(status)
+         .then((response) => {
+          if(response.data.resultCode === 0){
+            dispatch(setSatusActionCreator(status))
+           
+          }         
+         });
+      }

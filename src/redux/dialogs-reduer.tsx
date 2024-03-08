@@ -14,7 +14,7 @@ let inisialState = {
     { id: 2, message: "Hi! What is your name" },
     { id: 3, message: "My name is Sasha" },
   ] as MessageType[],
-  newMessage: "",
+  // newMessage: "",
   dialogs: [
     {
       id: 1,
@@ -49,30 +49,29 @@ export const dialogsReducer = (
     case "SEND-MESSAGE": {
       const newMessage: MessageType = {
         id: new Date().getTime(),
-        message: state.newMessage,
+        message: action.newMessage,
       };
       return {
         ...state,
         message : [...state.message,newMessage],
-        newMessage : ""
       }
     
     }
-    case "UPDATE-NEW-MESSAGE-TEXT": {
-      return {
-        ...state,
-        newMessage : action.newMessageText
-      }
-    }
+    // case "UPDATE-NEW-MESSAGE-TEXT": {
+    //   return {
+    //     ...state,
+    //     newMessage : action.newMessageText
+    //   }
+    // }
     default:
       return state;
   }
 };
 export type SendMessageActionType = ReturnType<typeof sendMessageActionCreator>;
-export type updateNewMessageTextType = ReturnType< typeof updateNewMessageTextActionCreator>;
+// export type updateNewMessageTextType = ReturnType< typeof updateNewMessageTextActionCreator>;
 export type ActionsDialogsTypes =
   | SendMessageActionType
-  | updateNewMessageTextType;
+  // | updateNewMessageTextType;
 
 export const sendMessageActionCreator = (newMessage: string) => {
   return {
@@ -80,8 +79,8 @@ export const sendMessageActionCreator = (newMessage: string) => {
     newMessage: newMessage,
   } as const;
 };
-export const updateNewMessageTextActionCreator = (text: string) => {
-  return {
-    type: "UPDATE-NEW-MESSAGE-TEXT", newMessageText: text,
-  } as const;
-};
+// export const updateNewMessageTextActionCreator = (text: string) => {
+//   return {
+//     type: "UPDATE-NEW-MESSAGE-TEXT", newMessageText: text,
+//   } as const;
+// };

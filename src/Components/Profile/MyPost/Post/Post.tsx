@@ -1,4 +1,5 @@
 import s from './Post.module.css'
+import userPhoto from "../../Components/asses/img/userPhoto.jpg"
 
 
 type PostTypeProps = {

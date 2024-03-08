@@ -175,102 +175,102 @@ export type ActionType = ActionsPostTypes | ActionsDialogsTypes | ActionsSidebar
 //   rerenderEntireTree = observer;
 // };
 
-export const store:StoreType = {
-    _state:{
-        ProfilePage: {
-          post: [
-            {
-              id: 1,
-              src: "https://i.pinimg.com/originals/8e/8a/55/8e8a558f305f3f1bb6aec1d0a2a24e52.jpg",
-              name: "Alex Lee ",
-              title: "post1",
-              message: "Hello",
-              like: 10,
-            },
-            {
-              id: 2,
-              src: "https://mykaleidoscope.ru/x/uploads/posts/2023-05/1685075304_mykaleidoscope-ru-p-krasivii-zhenskii-profil-42.jpg",
-              name: "Linda Lohan ",
-              title: "post 2",
-              message: "Bye",
-              like: 5,
-            },
-            {
-              id: 3,
-              src: "https://mykaleidoscope.ru/x/uploads/posts/2023-05/1685075304_mykaleidoscope-ru-p-krasivii-zhenskii-profil-42.jpg",
-              name: "Galina Kuznetsova",
-              title: "post 3",
-              message: "Like",
-              like: 10,
-            },
-          ],
-          newPostText: "",
-        },
-        DialogsPage: {
-          message: [
-            { id: 1, message: "Hi" },
-            { id: 2, message: "Hi! What is your name" },
-            { id: 3, message: "My name is Sasha" },
-          ],
-          newMessage: "",
-          dialogs: [
-            {
-              id: 1,
-              name: "Dimych",
-              img: "https://img.razrisyika.ru/kart/49/1200/194297-avatarka-9.jpg",
-            },
-            {
-              id: 2,
-              name: "Anna",
-              img: "https://img.razrisyika.ru/kart/49/194291-avatarka-3.jpg",
-            },
-            {
-              id: 3,
-              name: "Victor",
-              img: "https://sneg.top/uploads/posts/2023-06/1687659366_sneg-top-p-avatarka-dlya-gitkhaba-krasivo-36.jpg",
-            },
-            {
-              id: 4,
-              name: "Vika",
-              img: "https://otkritkis.com/wp-content/uploads/2021/10/ava-111.jpg",
-            },
-          ],
-        },
-        Sidebar: {
-          friends: [
-            {
-              id: 1,
-              name: "Alina",
-              img: "https://www.charlescameron.ru/netcat_files/556/797/9d8ddd3d_3f11_420b_aba6_695eb86f7f9b_1.jpg",
-            },
-            {
-              id: 2,
-              name: "Mishail",
-              img: "https://i.pinimg.com/originals/0d/29/08/0d2908f2b696795c7df67dda5993fcb1.jpg",
-            },
-            {
-              id: 3,
-              name: "Karina",
-              img: "https://img.goodfon.ru/original/2000x1485/5/80/doutzen-kroes-dautcen-krez-2332.jpg",
-            },
-          ],
-        },
-      },
-      _callSubscriber (_state:StateType) {
-        console.log("State changed");
-      },
-      getState(){
-        return this._state
-      },
+// export const store:StoreType = {
+//     _state:{
+//         ProfilePage: {
+//           post: [
+//             {
+//               id: 1,
+//               src: "https://i.pinimg.com/originals/8e/8a/55/8e8a558f305f3f1bb6aec1d0a2a24e52.jpg",
+//               name: "Alex Lee ",
+//               title: "post1",
+//               message: "Hello",
+//               like: 10,
+//             },
+//             {
+//               id: 2,
+//               src: "https://mykaleidoscope.ru/x/uploads/posts/2023-05/1685075304_mykaleidoscope-ru-p-krasivii-zhenskii-profil-42.jpg",
+//               name: "Linda Lohan ",
+//               title: "post 2",
+//               message: "Bye",
+//               like: 5,
+//             },
+//             {
+//               id: 3,
+//               src: "https://mykaleidoscope.ru/x/uploads/posts/2023-05/1685075304_mykaleidoscope-ru-p-krasivii-zhenskii-profil-42.jpg",
+//               name: "Galina Kuznetsova",
+//               title: "post 3",
+//               message: "Like",
+//               like: 10,
+//             },
+//           ],
+//           newPostText: "",
+//         },
+//         DialogsPage: {
+//           message: [
+//             { id: 1, message: "Hi" },
+//             { id: 2, message: "Hi! What is your name" },
+//             { id: 3, message: "My name is Sasha" },
+//           ],
+//           newMessage: "",
+//           dialogs: [
+//             {
+//               id: 1,
+//               name: "Dimych",
+//               img: "https://img.razrisyika.ru/kart/49/1200/194297-avatarka-9.jpg",
+//             },
+//             {
+//               id: 2,
+//               name: "Anna",
+//               img: "https://img.razrisyika.ru/kart/49/194291-avatarka-3.jpg",
+//             },
+//             {
+//               id: 3,
+//               name: "Victor",
+//               img: "https://sneg.top/uploads/posts/2023-06/1687659366_sneg-top-p-avatarka-dlya-gitkhaba-krasivo-36.jpg",
+//             },
+//             {
+//               id: 4,
+//               name: "Vika",
+//               img: "https://otkritkis.com/wp-content/uploads/2021/10/ava-111.jpg",
+//             },
+//           ],
+//         },
+//         Sidebar: {
+//           friends: [
+//             {
+//               id: 1,
+//               name: "Alina",
+//               img: "https://www.charlescameron.ru/netcat_files/556/797/9d8ddd3d_3f11_420b_aba6_695eb86f7f9b_1.jpg",
+//             },
+//             {
+//               id: 2,
+//               name: "Mishail",
+//               img: "https://i.pinimg.com/originals/0d/29/08/0d2908f2b696795c7df67dda5993fcb1.jpg",
+//             },
+//             {
+//               id: 3,
+//               name: "Karina",
+//               img: "https://img.goodfon.ru/original/2000x1485/5/80/doutzen-kroes-dautcen-krez-2332.jpg",
+//             },
+//           ],
+//         },
+//       },
+//       _callSubscriber (_state:StateType) {
+//         console.log("State changed");
+//       },
+//       getState(){
+//         return this._state
+//       },
    
-      subscribe (callback) {
-        this. _callSubscriber = callback;
-      },   
-      dispatch(action){
-        this._state.ProfilePage = profileReducer(this._state.ProfilePage,action)
-        this._state.DialogsPage = dialogsReducer( this._state.DialogsPage,action)
-        // this._state.Sidebar = sidebarReducer(this._state.Sidebar,action)
-        this. _callSubscriber(this._state);
-      }
-}
+//       subscribe (callback) {
+//         this. _callSubscriber = callback;
+//       },   
+//       dispatch(action){
+//         this._state.ProfilePage = profileReducer(this._state.ProfilePage,action)
+//         this._state.DialogsPage = dialogsReducer( this._state.DialogsPage,action)
+//         // this._state.Sidebar = sidebarReducer(this._state.Sidebar,action)
+//         this. _callSubscriber(this._state);
+//       }
+// }
 

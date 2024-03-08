@@ -2,3 +2,21 @@
     width: 400px;
     height: 300px;
 }
+.userContent{
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid gray;
+    padding: 5px;
+    width: 100%;
+}
+
+.userPhoto {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.abouteUsers{
+    display: flex;
+    flex-direction: column;
+}

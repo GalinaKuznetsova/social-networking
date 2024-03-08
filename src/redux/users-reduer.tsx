@@ -1,3 +1,8 @@
+import { Dispatch } from "redux";
+import { usersAPI } from "../api/api";
+import { AppRootState } from "./redux-store";
+
+
 export type UserType = {
   id: number;
   name: string;
@@ -13,12 +18,14 @@ export type UserType = {
   }
  
 };
+
 export type UsersPageType = {
 users:UserType[],
-pageSize:number,
+pageSize:number, 
 totalCount:number,
 currentPage:number,
-isFetching:boolean
+isFetching:boolean,
+followingInProgrees:Array<number>
 };
 
 const inisialState: UsersPageType = {
@@ -26,27 +33,32 @@ const inisialState: UsersPageType = {
   pageSize:5,
   totalCount:0,
   currentPage:1,
-  isFetching:false
+  isFetching:false,
+  followingInProgrees:[]
 }; 
 
 export const usersReducer = (
   state: UsersPageType = inisialState,
   action: ActionUsersTypes
-): UsersPageType | undefined => {
+): UsersPageType => {
   switch (action.type) {
+
     case "FOLLOW": {
+  
    return {
     ...state,
     users:state.users.map((u)=>u.id === action.id ? {...u,followed:true} : u)
    }
     }
     case "UNFOLLOW": {
+    
       return {
         ...state,
         users:state.users.map((u)=>u.id === action.id ? {...u,followed:false} : u)
        }
     }
     case "SET_USERS": {
+     
       return {...state, users:[...action.users]}
         }
         case "SET_CURRENT_PAGE": {
@@ -56,7 +68,15 @@ export const usersReducer = (
           return {...state, totalCount:action.totalCount}
         }
         case "TOGGLE_IS_FETCHING":{
+          
           return {...state, isFetching:action.isFetching}
+        }
+        case 'TOGGLE_IS_FOLLOWING_PROGRESS':{
+        
+          return {...state, 
+            followingInProgrees:action.isFetching
+            ? [...state.followingInProgrees,action.id]
+            :  state.followingInProgrees.filter(id => id !== action.id)}
         }
         
 
@@ -70,13 +90,15 @@ export type SetUsersActionType = ReturnType< typeof SetUsersActionCreator>;
 export type SetCurrentPageActionType = ReturnType<typeof SetCurrentPageActionCreator>
 export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCountActionCreator>
 export type setIsFetchingActionType = ReturnType<typeof setIsFetchingActionCreator>
+export type toggleIsFollowingProgressActionType = ReturnType<typeof toggleIsFollowingProgressActionCreator>
 
 export type ActionUsersTypes = SetUsersActionType
   | FollowActionType
   | UnfollowActionType
   | SetCurrentPageActionType 
   | setTotalUsersCountActionType
-  | setIsFetchingActionType;
+  | setIsFetchingActionType
+  | toggleIsFollowingProgressActionType;
 
 export const FollowActionCreator = (userId: number) => {
   return {
@@ -112,6 +134,51 @@ export const SetUsersActionCreator = (users:UserType[]) => {
  export const setIsFetchingActionCreator = (isFetching:boolean)=>{
   return {
     type: "TOGGLE_IS_FETCHING",
-    isFetching:isFetching
+    isFetching:isFetching,
+    
   } as const
+ }
+
+ ///Thunk
+ export const toggleIsFollowingProgressActionCreator = (userId: number,isFetching:boolean)=>{
+ 
+  return {
+    type: "TOGGLE_IS_FOLLOWING_PROGRESS",
+    id:userId,
+    isFetching:isFetching,
+  } as const
+ }
+
+ export  const getUsersThunkCreator = (currentPage:number ,pageSize?:number)=> (dispatch: Dispatch<ActionUsersTypes>, getState: () => AppRootState) =>{
+  dispatch(setIsFetchingActionCreator(true))
+  usersAPI.getUsers(currentPage,pageSize)
+    .then((data) => {
+      dispatch(setIsFetchingActionCreator(false))
+      dispatch(SetUsersActionCreator(data.items))
+      dispatch(setTotalUsersCountActionCreator(data.totalCount))
+    });
+ }
+
+ export  const unfollowThunkCreator = (id:number)=> (dispatch: Dispatch<ActionUsersTypes>, getState: () => AppRootState) =>{
+
+  dispatch(toggleIsFollowingProgressActionCreator(id,true))
+  usersAPI.unfollow(id)
+      .then((response) => {
+        if(response.data.resultCode === 0){
+          dispatch(UnfollowActionCreator(id));
+        }
+        dispatch(toggleIsFollowingProgressActionCreator(id,false))
+      });
+      console.log(getState().usersPage.users[1].id)
+ }
+ export  const followThunkCreator = (id:number)=> (dispatch: Dispatch<ActionUsersTypes>, getState: () => AppRootState) =>{
+  dispatch(toggleIsFollowingProgressActionCreator(id,true))
+  usersAPI.follow(id)
+      .then((response) => {
+        if(response.data.resultCode === 0){
+          dispatch(FollowActionCreator(id));
+        }
+        dispatch(toggleIsFollowingProgressActionCreator(id,false))
+      });
+  console.log(getState().usersPage.users[2].id)
  }

@@ -1,28 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './App.css'
-import Header from "./Components/Header/Header";
-import Profile from "./Components/Profile/Profile";
-import { DialogsContainer } from "./Components/Dialogs/DialogsContainer";
+
 import { Route, Routes } from "react-router-dom";
 import { Music } from "./Components/Music/Music";
 import { New } from "./Components/New/New";
 import Navbar from "./Components/NavBar/Navbar";
-import { UsersContainer } from "./Components/Users/UsersContainer";
+import  UsersAPIComponent from "./Components/Users/UsersContainer";
+import  HeaderContainer  from "./Components/Header/HeaderContainer";
+import { Login } from "./Components/Login/Login";
+import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
+import  {ProfileContainer}  from "./Components/Profile/ProfileContainer";
+
+
 
 
 
 export const App = () => {
+   
+    
     return (
         <div className='app-wrapper'>
-            <Header/>
+            <HeaderContainer/>
           
             <div className='app-wrapper-content'>
             <Navbar />
             <Routes>
-            
-                <Route path= {'/profile'} element = {<Profile />}/>
+                 <Route path= {'/login'} element = {<Login/>}/>
+                 <Route path= {'/profile/:userId?'} element = {<ProfileContainer/>}/>
                 <Route path={'/dialogs/*'} element ={<DialogsContainer/>}/>
-                <Route path={'/users'} element ={<UsersContainer/>}/>
+                <Route path={'/users'} element ={<UsersAPIComponent/>}/>
                 <Route path= {'/music'} element = {<Music/>}/>
                 <Route path= {'/new'} element = {<New/>}/>
                     </Routes>

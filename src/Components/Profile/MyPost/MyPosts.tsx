@@ -1,7 +1,10 @@
 import Post from "./Post/Post";
-import React, { ChangeEvent } from "react";
+import React from "react";
 import s from "./Post/Post.module.css";
 import { MyPostPropsType } from "./MyPostsContainer";
+import { InjectedFormProps,Field, reduxForm } from "redux-form";
+import { maxLengthCreator, required } from "../../../utils/validators/valodators";
+import { Textarea } from "../../FormControls/FormsControls";
 
 // type MyPostType = {
 //   post: PostType[];
@@ -9,9 +12,11 @@ import { MyPostPropsType } from "./MyPostsContainer";
 //   addPost: (newPostText: string) => void;
 //   newPostText: string;
 // };
+
 export const MyPosts = (props: MyPostPropsType) => {
   let postElements = props.post.map((p) => (
     <Post
+    key={p.id}
       message={p.message}
       like={p.like}
       name={p.name}
@@ -20,23 +25,45 @@ export const MyPosts = (props: MyPostPropsType) => {
     />
   ));
 
-  const onAddPost = () => {
-    props.addPost(props.newPostText);
-  };
-  let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    let text = e.currentTarget.value;
-    props.updateNewPostText(text);
-  };
+
+  const onSubmit = (formData:AddPostFormValueType) => {
+    props.addPost(formData.message);
+ }
   return (
     <div>
       <h3> My Posts</h3>
       <div>
-        <div className={s.mypostContent}>
-          <textarea onChange={onPostChange} value={props.newPostText} />
-          <button onClick={onAddPost}>Add post</button>
-        </div>
+      <ReduxAddMessageForm onSubmit={onSubmit}/>
         <div>{postElements}</div>
       </div>
     </div>
   );
 };
+
+
+
+
+type AddPostFormValueType = {
+  message:string
+}
+
+
+let maxLength10 = maxLengthCreator(10)
+
+
+
+export const AddPostForm:React.FC<InjectedFormProps<AddPostFormValueType>>=(props)=>{ 
+  return (
+  <form onSubmit={props.handleSubmit} className= {s.dialogsSendMessage}>
+    <div>
+    <Field  placeholder={"Post message"} className={s.dialogTextarea} name={'message'} 
+    component = {Textarea} validate={[required,maxLength10]}/>
+    </div>
+    <div>
+    <button className={s.dialogsBtn}>Add post</button>
+    </div>
+      </form>
+  )
+}
+
+const ReduxAddMessageForm = reduxForm<AddPostFormValueType>({ form: 'ProfileAddNewPost' })(AddPostForm)
