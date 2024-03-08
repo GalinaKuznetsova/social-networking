@@ -4,7 +4,7 @@ import { dialogsReducer } from "./dialogs-reduer";
 import { sidebarReducer } from "./sidebar-reducer";
 import { usersReducer } from "./users-reduer";
 import { authReducer } from "./auth-reducer";
-import { ThunkDispatch, thunk } from "redux-thunk";
+import thunk, { ThunkDispatch } from "redux-thunk";
 import { useDispatch } from "react-redux";
 import {reducer as formReducer} from "redux-form"
 
